@@ -17,7 +17,7 @@ class SpeakersController extends BaseController
 //        $rootLocationId = $configResolver->getParameter('content.tree_root.location_id');
         //var_dump($rootLocationId);
 
-        $rootLocation = $this->repository->getLocationService()->loadLocation( 128 );
+        $rootLocation = $this->repository->getLocationService()->loadLocation( 127 );
         $query = new Query();
         $query->filter = new Criterion\LogicalAnd(
             array(
