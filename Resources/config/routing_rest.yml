@@ -1,0 +1,5 @@
+ez_get_speakers:
+    pattern: /speakers/list
+    defaults:
+        _controller: ez.controller.speakers:getList
+    methods: [GET]
