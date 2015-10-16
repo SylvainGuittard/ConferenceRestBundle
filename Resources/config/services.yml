@@ -3,9 +3,20 @@ services:
         class: Ez\ConferenceRestBundle\Rest\Controller\SpeakersController
         parent: ezpublish_rest.controller.base
 
-    ez.value_object_visitor.news:
+    ez.value_object_visitor.speaker:
         parent: ezpublish_rest.output.value_object_visitor.base
         class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Speakers
         arguments: [ @ezpublish_rest.field_type_serializer ]
         tags:
             - { name: ezpublish_rest.output.value_object_visitor, type: Ez\ConferenceRestBundle\Rest\Values\Speakers }
+
+    ez.controller.talk:
+        class: Ez\ConferenceRestBundle\Rest\Controller\TalkController
+        parent: ezpublish_rest.controller.base
+
+    ez.value_object_visitor.talk:
+        parent: ezpublish_rest.output.value_object_visitor.base
+        class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Talk
+        arguments: [ @ezpublish_rest.field_type_serializer ]
+        tags:
+            - { name: ezpublish_rest.output.value_object_visitor, type: Ez\ConferenceRestBundle\Rest\Values\Talk }

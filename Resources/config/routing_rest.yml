@@ -3,3 +3,9 @@ ez_get_speakers:
     defaults:
         _controller: ez.controller.speakers:getList
     methods: [GET]
+
+ez_get_talks:
+    pattern: /talks/list
+    defaults:
+        _controller: ez.controller.talk:getList
+    methods: [GET]

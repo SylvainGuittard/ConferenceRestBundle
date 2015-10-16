@@ -7,7 +7,7 @@ use eZ\Publish\Core\REST\Common\Output\Generator;
 use eZ\Publish\Core\REST\Common\Output\ValueObjectVisitor;
 use eZ\Publish\Core\REST\Common\Output\Visitor;
 
-class Speakers extends ValueObjectVisitor
+class Talk extends ValueObjectVisitor
 {
     /**
      * @var \eZ\Publish\Core\REST\Common\Output\FieldTypeSerializer
@@ -31,14 +31,12 @@ class Speakers extends ValueObjectVisitor
      */
     public function visit(Visitor $visitor, Generator $generator, $data)
     {
-
-
         $generator->startHashElement( 'Content' );
-        $generator->startList( 'Speakers' );
+        $generator->startList( 'Talks' );
         /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $speaker */
         foreach ( $data->speakers as $speaker )
         {
-            $generator->startHashElement( 'speaker' );
+            $generator->startHashElement( 'talk' );
 
             // Display the content name
             $generator->startValueElement( 'name', $speaker->valueObject->versionInfo->contentInfo->name );
@@ -67,10 +65,10 @@ class Speakers extends ValueObjectVisitor
                 $generator->endHashElement( 'field' );
             }
             $generator->endList( 'field' );
-            $generator->endHashElement( 'speaker' );
+            $generator->endHashElement( 'talk' );
 
         }
-        $generator->endList( 'Speakers' );
+        $generator->endList( 'Talks' );
         $generator->endHashElement( 'Content' );
     }
 }
