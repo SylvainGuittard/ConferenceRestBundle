@@ -9,3 +9,10 @@ ez_get_talks:
     defaults:
         _controller: ez.controller.talk:getList
     methods: [GET]
+
+ez_get_talks_by_speaker:
+    pattern: /talks/get/{speakerId}
+    defaults:
+        _controller: ez.controller.talk:getListBySpeaker
+    methods: [GET]
+
