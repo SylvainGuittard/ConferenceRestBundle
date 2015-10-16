@@ -17,6 +17,10 @@ class TalkController extends BaseController
      */
     public function getList( )
     {
+        /** @var ConfigResolver $configResolver */
+        $configResolver = $this->container->get('ezpublish.config.resolver.core');
+        $languages = $configResolver->getParameter( 'languages' );
+
         $rootLocation = $this->repository->getLocationService()->loadLocation( 2 );
         $query = new Query();
         $query->filter = new Criterion\LogicalAnd(
@@ -26,7 +30,7 @@ class TalkController extends BaseController
                 new Criterion\Subtree( $rootLocation->pathString )
             )
         );
-        $query->sortClauses = array( new SortClause\Field( "slot", "starting_time", Query::SORT_DESC ));
+        $query->sortClauses = array( new SortClause\Field( "slot", "starting_time", Query::SORT_DESC, $languages[0] ));
 
         $result = $this->repository->getSearchService()->findContent( $query )->searchHits;
 
@@ -42,19 +46,24 @@ class TalkController extends BaseController
      */
     public function getListBySpeaker( Request $request )
     {
+        /** @var ConfigResolver $configResolver */
+        $configResolver = $this->container->get('ezpublish.config.resolver.core');
+        $languages = $configResolver->getParameter( 'languages' );
+
         $speakerId = $request->get( 'speakerId' );
 
         $rootLocation = $this->repository->getLocationService()->loadLocation( 2 );
         $query = new Query();
-        $query->filter = new Criterion\LogicalAnd(
+        $query->criterion = new Criterion\LogicalAnd(
             array(
                 new Criterion\ContentTypeIdentifier( array('slot') ),
                 new Criterion\Visibility( Criterion\Visibility::VISIBLE ),
                 new Criterion\Subtree( $rootLocation->pathString ),
-                new Criterion\Field( 'speaker', Criterion\Operator::CONTAINS, $speakerId )
+                new Criterion\FieldRelation( 'speaker', Criterion\Operator::IN, array($speakerId) )
             )
         );
-        $query->sortClauses = array( new SortClause\Field( "slot", "starting_time", Query::SORT_DESC ));
+
+        $query->sortClauses = array( new SortClause\Field( "slot", "starting_time", Query::SORT_DESC, $languages[0] ));
 
         $result = $this->repository->getSearchService()->findContent( $query )->searchHits;
 
