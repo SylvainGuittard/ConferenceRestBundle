@@ -2,8 +2,7 @@
 
 namespace Ez\ConferenceRestBundle\Rest\Controller;
 
-use Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Talk;
-use Ez\ConferenceRestBundle\Rest\Values\Speakers;
+use Ez\ConferenceRestBundle\Rest\Values\Talk;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
