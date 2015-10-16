@@ -33,25 +33,25 @@ class Talk extends ValueObjectVisitor
     {
         $generator->startHashElement( 'Content' );
         $generator->startList( 'Talks' );
-        /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $speaker */
-        foreach ( $data->speakers as $speaker )
+        /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $talk */
+        foreach ( $data->talks as $talk )
         {
             $generator->startHashElement( 'talk' );
 
             // Display the content name
-            $generator->startValueElement( 'name', $speaker->valueObject->versionInfo->contentInfo->name );
+            $generator->startValueElement( 'name', $talk->valueObject->versionInfo->contentInfo->name );
             $generator->endValueElement( 'name' );
 
             // Display the content Id
-            $generator->startValueElement( 'id', $speaker->valueObject->versionInfo->contentInfo->id );
+            $generator->startValueElement( 'id', $talk->valueObject->versionInfo->contentInfo->id );
             $generator->endValueElement( 'id' );
 
             // Display the mainLocationId
-            $generator->startValueElement( 'mainLocationId', $speaker->valueObject->versionInfo->contentInfo->mainLocationId );
+            $generator->startValueElement( 'mainLocationId', $talk->valueObject->versionInfo->contentInfo->mainLocationId );
             $generator->endValueElement( 'mainLocationId' );
 
             $generator->startList( 'field' );
-            foreach ( $speaker->valueObject->getFields() as $field )
+            foreach ( $talk->valueObject->getFields() as $field )
             {
                 $generator->startHashElement( 'field' );
                 $generator->startValueElement( 'fieldName', $field->fieldDefIdentifier );
