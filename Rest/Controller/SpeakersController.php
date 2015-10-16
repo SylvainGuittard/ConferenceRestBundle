@@ -13,11 +13,10 @@ class SpeakersController extends BaseController
     public function getList( )
     {
         /** @var ConfigResolver $configResolver */
-//        $configResolver = $this->container->get('ezpublish.config.resolver.core');
-//        $rootLocationId = $configResolver->getParameter('content.tree_root.location_id');
-        //var_dump($rootLocationId);
+        $configResolver = $this->container->get('ezpublish.config.resolver.core');
+        $languages = $configResolver->getParameter( 'languages' );
 
-        $rootLocation = $this->repository->getLocationService()->loadLocation( 127 );
+        $rootLocation = $this->repository->getLocationService()->loadLocation( 2 );
         $query = new Query();
         $query->filter = new Criterion\LogicalAnd(
             array(
@@ -26,7 +25,9 @@ class SpeakersController extends BaseController
                 new Criterion\Subtree( $rootLocation->pathString )
             )
         );
-        $query->sortClauses = array( new Query\SortClause\DatePublished( Query::SORT_DESC ) );
+//        $query->sortClauses = array( new Query\SortClause\DatePublished( Query::SORT_DESC ) );
+        $query->sortClauses = array( new Query\SortClause\Field( "speaker", "last_name", Query::SORT_ASC, $languages[0] ));
+
 
         $result = $this->repository->getSearchService()->findContent( $query )->searchHits;
 
