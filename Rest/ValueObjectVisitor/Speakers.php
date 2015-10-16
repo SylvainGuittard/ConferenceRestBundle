@@ -32,10 +32,14 @@ class Speakers extends ValueObjectVisitor
     public function visit(Visitor $visitor, Generator $generator, $data)
     {
 
-        $generator->startHashElement( 'Speakers' );
+
+        $generator->startHashElement( 'Content' );
+        $generator->startList( 'Speakers' );
         /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $speaker */
         foreach ( $data->speakers as $speaker )
         {
+            $generator->startHashElement( 'speaker' );
+
             // Display the content name
             $generator->startValueElement( 'name', $speaker->valueObject->versionInfo->contentInfo->name );
             $generator->endValueElement( 'name' );
@@ -63,8 +67,10 @@ class Speakers extends ValueObjectVisitor
                 $generator->endHashElement( 'field' );
             }
             $generator->endList( 'field' );
+            $generator->endHashElement( 'speaker' );
 
         }
-        $generator->endHashElement( 'Speakers' );
+        $generator->endList( 'Speakers' );
+        $generator->endHashElement( 'Content' );
     }
 }
