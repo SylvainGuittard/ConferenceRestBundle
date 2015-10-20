@@ -2,6 +2,8 @@
 
 namespace Ez\ConferenceRestBundle\Rest\ValueObjectVisitor;
 
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\Core\FieldType\DateAndTime\Value;
 use eZ\Publish\Core\REST\Common\Output\FieldTypeSerializer;
 use eZ\Publish\Core\REST\Common\Output\Generator;
 use eZ\Publish\Core\REST\Common\Output\ValueObjectVisitor;
@@ -31,11 +33,30 @@ class Talk extends ValueObjectVisitor
      */
     public function visit(Visitor $visitor, Generator $generator, $data)
     {
+        $previousTalkDate = 0;
+        $numTalks = count($data->talks);
+
         $generator->startHashElement( 'Content' );
         $generator->startList( 'Talks' );
         /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $talk */
-        foreach ( $data->talks as $talk )
+        foreach ( $data->talks as $key => $talk )
         {
+            /** @var Content $talkContent */
+            $talkContent = $talk->valueObject;
+            /** @var Value $talkDateValue */
+            $talkDateValue = $talkContent->getFieldValue( 'starting_time' );
+
+            $talkDate = $talkDateValue->value->format('z');
+
+            if ($previousTalkDate == 0) {
+                $previousTalkDate = $talkDate;
+                $generator->startHashElement( "d".$talkDate );
+            }
+            elseif ($previousTalkDate != $talkDate) {
+                $generator->endHashElement( "d".$previousTalkDate );
+                $generator->startHashElement( "d".$talkDate );
+                $previousTalkDate = $talkDate;
+            }
             $generator->startHashElement( 'talk' );
 
             // Display the content name
@@ -67,7 +88,10 @@ class Talk extends ValueObjectVisitor
             $generator->endList( 'field' );
             $generator->endHashElement( 'talk' );
 
+
+
         }
+        $generator->endHashElement( "d".$talkDate );
         $generator->endList( 'Talks' );
         $generator->endHashElement( 'Content' );
     }
