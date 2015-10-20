@@ -17,6 +17,7 @@ services:
     ez.value_object_visitor.speaker:
         parent: ezpublish_rest.output.value_object_visitor.base
         class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Speaker
+        arguments: [ @ezpublish_rest.field_type_serializer ]
         tags:
             - { name: ezpublish_rest.output.value_object_visitor, type: Ez\ConferenceRestBundle\Rest\Values\Speaker }
 
