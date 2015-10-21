@@ -51,13 +51,17 @@ class Talk extends ValueObjectVisitor
             if ($previousTalkDate == 0) {
                 $previousTalkDate = $talkDate;
                 $generator->startHashElement( "d".$talkDate );
+                $generator->startList( 'talks' );
             }
             elseif ($previousTalkDate != $talkDate) {
+                $generator->endList( 'talks' );
                 $generator->endHashElement( "d".$previousTalkDate );
                 $generator->startHashElement( "d".$talkDate );
+                $generator->startList( 'talks' );
+
                 $previousTalkDate = $talkDate;
             }
-            $generator->startHashElement( 'talk' );
+            $generator->startObjectElement( 'talk');
 
             // Display the content name
             $generator->startValueElement( 'name', $talk->valueObject->versionInfo->contentInfo->name );
@@ -86,11 +90,12 @@ class Talk extends ValueObjectVisitor
                 $generator->endHashElement( 'field' );
             }
             $generator->endList( 'field' );
-            $generator->endHashElement( 'talk' );
+            $generator->endObjectElement( 'talk' );
 
 
 
         }
+        $generator->endList('talks');
         $generator->endHashElement( "d".$talkDate );
         $generator->endList( 'Talks' );
         $generator->endHashElement( 'Content' );

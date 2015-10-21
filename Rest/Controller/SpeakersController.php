@@ -4,7 +4,9 @@ namespace Ez\ConferenceRestBundle\Rest\Controller;
 
 use Ez\ConferenceRestBundle\Rest\Values\Speaker;
 use Ez\ConferenceRestBundle\Rest\Values\Speakers;
+use Ez\ConferenceRestBundle\Rest\Values\Talk;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigResolver;
+use Ez\ConferenceRestBundle\Services\TalkService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -42,16 +44,24 @@ class SpeakersController extends BaseController
 
     /**
      * Function to get a speaker + his talks
-     * @param $id
+     * @param $speakerId
      * @return Speaker
      */
-    public function getSpeaker ( $id ) {
+    public function getSpeaker ( $speakerId ) {
         //get Speaker
-        $speakerLocation = $this->repository->getLocationService()->loadLocation( $id );
+        $speakerLocation = $this->repository->getLocationService()->loadLocation( $speakerId );
+        $speakerContent = $this->repository->getContentService()->loadContentByContentInfo( $speakerLocation->getContentInfo() );
+
+        $speakerContentType = $this->repository->getContentTypeService()->loadContentTypeByIdentifier( 'speaker' );
 
         //get Talks for that speaker
+        /** @var TalkService $talkService */
+        $talkService = $this->container->get('ez.conference.rest.talk');
 
-        return new Speaker( $speakerLocation );
+        $result = $talkService->getListBySpeaker( $speakerId );
+//        return new Talk( $result['results'], $result['contentType'] );
+
+        return new Speaker( $speakerContent, $speakerContentType, new Talk( $result['results'], $result['contentType'] ) );
     }
 
 }
