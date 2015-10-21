@@ -7,7 +7,7 @@ ez_get_speakers:
 ez_get_speaker:
     pattern: /speaker/{id}
     defaults:
-        _controller: ez.controller.speaker:getSpeaker
+        _controller: ez.controller.speakers:getSpeaker
     methods: [GET]
 
 ez_get_talks:
