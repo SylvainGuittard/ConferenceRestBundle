@@ -2,8 +2,10 @@
 
 namespace Ez\ConferenceRestBundle\Rest\Controller;
 
+use Ez\ConferenceRestBundle\Rest\Values\Speaker;
 use Ez\ConferenceRestBundle\Rest\Values\Speakers;
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigResolver;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\Core\REST\Server\Controller as BaseController;
@@ -16,7 +18,10 @@ class SpeakersController extends BaseController
         $configResolver = $this->container->get('ezpublish.config.resolver.core');
         $languages = $configResolver->getParameter( 'languages' );
 
+        /** @var Location $rootLocation */
         $rootLocation = $this->repository->getLocationService()->loadLocation( 2 );
+
+        $rootLocation->
         $query = new Query();
         $query->filter = new Criterion\LogicalAnd(
             array(
@@ -28,25 +33,25 @@ class SpeakersController extends BaseController
 //        $query->sortClauses = array( new Query\SortClause\DatePublished( Query::SORT_DESC ) );
         $query->sortClauses = array( new Query\SortClause\Field( "speaker", "last_name", Query::SORT_ASC, $languages[0] ));
 
-
         $result = $this->repository->getSearchService()->findContent( $query )->searchHits;
 
-        $hits = array();
-//        if ( $result ) {
-//            foreach ($result as $hit) {
-//                $content = $this->repository->getContentService()->loadContent(
-//                    $hit->valueObject->versionInfo->contentInfo->id
-//                );
-//                var_dump($content);die();
-//                $hits = array(
-//                    "id" => $hit->valueObject->versionInfo->contentInfo->id,
-//                    "name" => $hit->valueObject->versionInfo->contentInfo->name,
-//                );
-//            }
-//        }
-        $hits = $result;
         $contentType = $this->repository->getContentTypeService()->loadContentTypeByIdentifier( 'speaker' );
 
-        return new Speakers( $hits, $contentType );
+        return new Speakers( $result, $contentType );
     }
+
+    /**
+     * Function to get a speaker + his talks
+     * @param $id
+     * @return Speaker
+     */
+    public function getSpeaker ( $id ) {
+        //get Speaker
+        $speakerLocation = $this->repository->getLocationService()->loadLocation( $id );
+
+        //get Talks for that speaker
+
+        return new Speaker( $speakerLocation );
+    }
+
 }
