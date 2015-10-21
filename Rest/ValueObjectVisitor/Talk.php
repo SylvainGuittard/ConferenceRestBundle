@@ -51,13 +51,13 @@ class Talk extends ValueObjectVisitor
             if ($previousTalkDate == 0) {
                 $previousTalkDate = $talkDate;
                 $generator->startHashElement( "d".$talkDate );
-                $generator->startList( 'talks' );
+                $generator->startList( "d".$talkDate );
             }
             elseif ($previousTalkDate != $talkDate) {
-                $generator->endList( 'talks' );
+                $generator->endList( "d".$previousTalkDate );
                 $generator->endHashElement( "d".$previousTalkDate );
                 $generator->startHashElement( "d".$talkDate );
-                $generator->startList( 'talks' );
+                $generator->startList( "d".$talkDate );
 
                 $previousTalkDate = $talkDate;
             }
@@ -95,7 +95,7 @@ class Talk extends ValueObjectVisitor
 
 
         }
-        $generator->endList('talks');
+        $generator->endList("d".$talkDate);
         $generator->endHashElement( "d".$talkDate );
         $generator->endList( 'Talks' );
         $generator->endHashElement( 'Content' );
