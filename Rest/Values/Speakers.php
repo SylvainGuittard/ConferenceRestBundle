@@ -10,6 +10,7 @@ class Speakers
     public function __construct( $speakers= array(), $contentType )
     {
         $this->speakers = $speakers;
+
         $this->contentType = $contentType;
     }
 }
