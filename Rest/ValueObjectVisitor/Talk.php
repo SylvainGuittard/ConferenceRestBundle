@@ -46,9 +46,9 @@ class Talk extends ValueObjectVisitor
             /** @var Value $talkDateValue */
             $talkDateValue = $talkContent->getFieldValue( 'starting_time' );
 
-            $talkDate = $talkDateValue->value->format('z');
+            $talkDate = $talkDateValue->value->format('Y.m.d');
 
-            if ($previousTalkDate == 0) {
+            if ($previousTalkDate === 0) {
                 $previousTalkDate = $talkDate;
                 $generator->startHashElement( "d".$talkDate );
                 $generator->startList( $talkDate );
