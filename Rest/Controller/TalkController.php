@@ -31,7 +31,7 @@ class TalkController extends BaseController
                 new Criterion\Subtree( $rootLocation->pathString )
             )
         );
-        $query->sortClauses = array( new SortClause\Field( "slot", "starting_time", Query::SORT_DESC, $languages[0] ));
+        $query->sortClauses = array( new SortClause\Field( "slot", "starting_time", Query::SORT_ASC, $languages[0] ));
 
         $result = $this->repository->getSearchService()->findContent( $query )->searchHits;
 
