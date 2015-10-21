@@ -23,7 +23,6 @@ class SpeakersController extends BaseController
         /** @var Location $rootLocation */
         $rootLocation = $this->repository->getLocationService()->loadLocation( 2 );
 
-        $rootLocation->
         $query = new Query();
         $query->filter = new Criterion\LogicalAnd(
             array(
