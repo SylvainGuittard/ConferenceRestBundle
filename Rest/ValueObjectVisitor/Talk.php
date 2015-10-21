@@ -37,7 +37,7 @@ class Talk extends ValueObjectVisitor
         $numTalks = count($data->talks);
 
         $generator->startHashElement( 'Content' );
-        $generator->startList( 'Talks' );
+        $generator->startList( 'Days' );
         /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $talk */
         foreach ( $data->talks as $key => $talk )
         {
@@ -98,7 +98,7 @@ class Talk extends ValueObjectVisitor
         }
         $generator->endList( $talkDate);
         $generator->endHashElement( "d".$talkDate );
-        $generator->endList( 'Talks' );
+        $generator->endList( 'Days' );
         $generator->endHashElement( 'Content' );
     }
 }
