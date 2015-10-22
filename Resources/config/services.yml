@@ -20,6 +20,13 @@ parameters:
     # Class for service talk
     ez.conference.talk.class: Ez\ConferenceRestBundle\Services\TalkService
 
+    # Controller for Sponsors
+    ez.controller.sponsors.class: Ez\ConferenceRestBundle\Rest\Controller\SponsorsController
+
+    # Rest Object for Sponsors
+    ez.value_object_visitor.sponsors.class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Sponsors
+    ez.value.sponsors.class: Ez\ConferenceRestBundle\Rest\Values\Sponsors
+
 services:
     # Speakers Rest conf
     ez.controller.speakers:
@@ -61,3 +68,15 @@ services:
             - @ezpublish.api.service.search
             - @ezpublish.api.service.content
             - @ezpublish.api.service.content_type
+
+    # Sponsors Rest Conf
+    ez.controller.sponsors:
+        class: %ez.controller.sponsors.class%
+        parent: ezpublish_rest.controller.base
+
+    ez.value_object_visitor.sponsors:
+        parent: ezpublish_rest.output.value_object_visitor.base
+        class: %ez.value_object_visitor.sponsors.class%
+        arguments: [ @ezpublish_rest.field_type_serializer ]
+        tags:
+            - { name: ezpublish_rest.output.value_object_visitor, type: %ez.value.sponsors.class% }
