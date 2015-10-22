@@ -22,3 +22,8 @@ ez_get_talks_by_speaker:
         _controller: ez.controller.talk:getListBySpeaker
     methods: [GET]
 
+ez_get_sponsors:
+    pattern: /sponsors/list
+    defaults:
+        _controller: ez.controller.sponsors:getList
+    methods: [GET]
