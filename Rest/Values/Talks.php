@@ -2,7 +2,7 @@
 
 namespace Ez\ConferenceRestBundle\Rest\Values;
 
-class Talk
+class Talks
 {
     public $talks;
     public $contentType;

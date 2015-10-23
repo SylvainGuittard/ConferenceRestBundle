@@ -2,10 +2,10 @@
 
 namespace Ez\ConferenceRestBundle\Rest\Controller;
 
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ChainConfigResolver;
 use Ez\ConferenceRestBundle\Rest\Values\Speaker;
 use Ez\ConferenceRestBundle\Rest\Values\Speakers;
-use Ez\ConferenceRestBundle\Rest\Values\Talk;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ConfigResolver;
+use Ez\ConferenceRestBundle\Rest\Values\Talks;
 use Ez\ConferenceRestBundle\Services\TalkService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -16,7 +16,7 @@ class SpeakersController extends BaseController
 {
     public function getList( )
     {
-        /** @var ConfigResolver $configResolver */
+        /** @var ChainConfigResolver $configResolver */
         $configResolver = $this->container->get('ezpublish.config.resolver.core');
         $languages = $configResolver->getParameter( 'languages' );
 
@@ -60,7 +60,7 @@ class SpeakersController extends BaseController
         $result = $talkService->getListBySpeaker( $speakerId );
 //        return new Talk( $result['results'], $result['contentType'] );
 
-        return new Speaker( $speakerContent, $speakerContentType, new Talk( $result['results'], $result['contentType'] ) );
+        return new Speaker( $speakerContent, $speakerContentType, new Talks( $result['results'], $result['contentType'] ) );
     }
 
 }
