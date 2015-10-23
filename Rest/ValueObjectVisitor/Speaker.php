@@ -40,8 +40,8 @@ class Speaker extends ValueObjectVisitor
         $previousTalkDate = 0;
 
         $generator->startHashElement( 'Content');
-        $generator->startList( 'Test' );
-        
+        $generator->startList( 'Speaker' );
+
         $generator->startHashElement( 'Speaker');
 
             // Display the content name
@@ -148,7 +148,7 @@ class Speaker extends ValueObjectVisitor
         $generator->endList( 'Days' );
         $generator->endHashElement( 'Talks' );
 
-        $generator->endList( 'Test');
+        $generator->endList( 'Speaker');
         $generator->endHashElement( 'Content' );
     }
 }
