@@ -40,7 +40,8 @@ class Speaker extends ValueObjectVisitor
         $previousTalkDate = 0;
 
         $generator->startHashElement( 'Content');
-
+        $generator->startList( 'Test' );
+        
         $generator->startHashElement( 'Speaker');
 
             // Display the content name
@@ -72,13 +73,14 @@ class Speaker extends ValueObjectVisitor
             $generator->endList( 'field' );
         $generator->endHashElement( 'Speaker');
 
-        $generator->startHashElement( 'Talks');
-        $generator->startList( 'Talks');
 
+        /* TALKS LIST */
+        $generator->startHashElement( 'Talks' );
+        $generator->startList( 'Days' );
         /** @var Talks $talkList */
         $talkList = $data->talkList;
         $contentTypeTalk = $talkList->contentType;
-        $talkDate = false;
+        $timeStampDay = false;
 
         foreach( $data->talkList->talks as $talk )
         {
@@ -87,20 +89,24 @@ class Speaker extends ValueObjectVisitor
             /** @var Value $talkDateValue */
             $talkDateValue = $talkContent->getFieldValue( 'starting_time' );
 
-            $talkDate = $talkDateValue->value->format('z');
+            //$talkDate = $talkDateValue->value->format('Y.m.d');
+            $dateOfTheDay = new \DateTime();
+            $dateOfTheDay->setISODate( $talkDateValue->value->format('Y'), $talkDateValue->value->format('W'), $talkDateValue->value->format('N'));
+            $timeStampDay = $dateOfTheDay->getTimestamp();
 
-            if ($previousTalkDate == 0) {
-                $previousTalkDate = $talkDate;
-                $generator->startHashElement( "d".$talkDate );
-                $generator->startList( 'talks' );
+            if ($previousTalkDate === 0) {
+                $previousTalkDate = $timeStampDay;
+                $generator->startHashElement( "d".$timeStampDay );
+                $generator->startList( $timeStampDay );
+
             }
-            elseif ($previousTalkDate != $talkDate) {
-                $generator->endList( 'talks' );
+            elseif ($previousTalkDate != $timeStampDay) {
+                $generator->endList( $previousTalkDate );
                 $generator->endHashElement( "d".$previousTalkDate );
-                $generator->startHashElement( "d".$talkDate );
-                $generator->startList( 'talks' );
+                $generator->startHashElement( "d".$timeStampDay );
+                $generator->startList( $timeStampDay );
 
-                $previousTalkDate = $talkDate;
+                $previousTalkDate = $timeStampDay;
             }
             $generator->startObjectElement( 'talk');
 
@@ -134,13 +140,15 @@ class Speaker extends ValueObjectVisitor
             $generator->endObjectElement( 'talk' );
 
         }
-        if($talkDate){
-            $generator->endList('talks');
-            $generator->endHashElement( "d".$talkDate );
-        }
 
-        $generator->endList( 'Talks');
-        $generator->endHashElement( 'Talks');
+        if($timeStampDay){
+            $generator->endList( $timeStampDay);
+            $generator->endHashElement( "d".$timeStampDay );
+        }
+        $generator->endList( 'Days' );
+        $generator->endHashElement( 'Talks' );
+
+        $generator->endList( 'Test');
         $generator->endHashElement( 'Content' );
     }
 }

@@ -39,6 +39,8 @@ class Talks extends ValueObjectVisitor
         $generator->startHashElement( 'Content' );
         $generator->startList( 'Days' );
         /** @var \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $talk */
+        $timeStampDay = false;
+
         foreach ( $data->talks as $key => $talk )
         {
             /** @var Content $talkContent */
@@ -96,12 +98,13 @@ class Talks extends ValueObjectVisitor
             $generator->endList( 'field' );
             $generator->endObjectElement( 'talk' );
 
-
-
         }
-        $generator->endList( $timeStampDay);
-        $generator->endHashElement( "d".$timeStampDay );
-        $generator->endList( 'Days' );
-        $generator->endHashElement( 'Content' );
+
+        if($timeStampDay){
+            $generator->endList( $timeStampDay);
+            $generator->endHashElement( "d".$timeStampDay );
+            $generator->endList( 'Days' );
+            $generator->endHashElement( 'Content' );
+        }
     }
 }
