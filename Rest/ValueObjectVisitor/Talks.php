@@ -3,11 +3,11 @@
 namespace Ez\ConferenceRestBundle\Rest\ValueObjectVisitor;
 
 use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\Core\FieldType\DateAndTime\Value;
 use eZ\Publish\Core\REST\Common\Output\FieldTypeSerializer;
 use eZ\Publish\Core\REST\Common\Output\Generator;
 use eZ\Publish\Core\REST\Common\Output\ValueObjectVisitor;
 use eZ\Publish\Core\REST\Common\Output\Visitor;
+use eZ\Publish\Core\FieldType\DateAndTime\Value;
 
 class Talks extends ValueObjectVisitor
 {

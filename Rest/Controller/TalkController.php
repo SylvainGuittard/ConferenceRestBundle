@@ -4,6 +4,7 @@ namespace Ez\ConferenceRestBundle\Rest\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ChainConfigResolver;
 use Ez\ConferenceRestBundle\Rest\Values\Talks;
+use Ez\ConferenceRestBundle\Rest\Values\Talk;
 use Ez\ConferenceRestBundle\Services\TalkService;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -56,4 +57,29 @@ class TalkController extends BaseController
         $result = $talkService->getListBySpeaker( $speakerId );
         return new Talks( $result['results'], $result['contentType'] );
     }
+
+
+    /**
+     * Get the list of all Talks
+     * @param ContentId $talkContentId
+     * @return Talks
+     */
+    public function getTalk( $talkContentId )
+    {
+        $talkContent = $this->repository->getContentService()->loadContent( $talkContentId );
+
+        $talkContentType = $this->repository->getContentTypeService()->loadContentTypeByIdentifier( 'slot' );
+
+        //get Talks for that speaker
+//        /** @var TalkService $talkService */
+//        $talkService = $this->container->get('ez.conference.rest.talk');
+//        $result = $talkService->getListBySpeaker( $speakerId );
+//        return new Talk( $result['results'], $result['contentType'] );
+
+        return new Talk( $talkContent, $talkContentType );
+    }
+
+
+
+
 }

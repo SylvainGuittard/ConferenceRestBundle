@@ -16,6 +16,12 @@ ez_get_talks:
         _controller: ez.controller.talks:getList
     methods: [GET]
 
+ez_get_talk_by_id:
+    pattern: /talk/{talkContentId}
+    defaults:
+        _controller: ez.controller.talks:getTalk
+    methods: [GET]
+
 ez_get_talks_by_speaker:
     pattern: /talks/get/{speakerId}
     defaults:
