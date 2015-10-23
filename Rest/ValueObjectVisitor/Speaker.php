@@ -2,7 +2,7 @@
 
 namespace Ez\ConferenceRestBundle\Rest\ValueObjectVisitor;
 
-use Ez\ConferenceRestBundle\Rest\Values\Talk;
+use Ez\ConferenceRestBundle\Rest\Values\Talks;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\REST\Common\Output\FieldTypeSerializer;
 use eZ\Publish\Core\REST\Common\Output\Generator;
@@ -41,7 +41,7 @@ class Speaker extends ValueObjectVisitor
 
         $generator->startHashElement( 'Content');
 
-        $generator->startHashElement( 'speaker');
+        $generator->startHashElement( 'Speaker');
 
             // Display the content name
             $generator->startValueElement( 'name', $speaker->getVersionInfo()->getContentInfo()->name );
@@ -70,14 +70,15 @@ class Speaker extends ValueObjectVisitor
                 $generator->endHashElement( 'field' );
             }
             $generator->endList( 'field' );
-        $generator->endHashElement( 'speaker');
+        $generator->endHashElement( 'Speaker');
 
         $generator->startHashElement( 'Talks');
         $generator->startList( 'Talks');
 
-        /** @var Talk $talkList */
+        /** @var Talks $talkList */
         $talkList = $data->talkList;
         $contentTypeTalk = $talkList->contentType;
+        $talkDate = false;
 
         foreach( $data->talkList->talks as $talk )
         {
@@ -133,8 +134,10 @@ class Speaker extends ValueObjectVisitor
             $generator->endObjectElement( 'talk' );
 
         }
-        $generator->endList('talks');
-        $generator->endHashElement( "d".$talkDate );
+        if($talkDate){
+            $generator->endList('talks');
+            $generator->endHashElement( "d".$talkDate );
+        }
 
         $generator->endList( 'Talks');
         $generator->endHashElement( 'Talks');
