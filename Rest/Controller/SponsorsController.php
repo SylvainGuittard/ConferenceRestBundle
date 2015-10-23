@@ -2,6 +2,7 @@
 
 namespace Ez\ConferenceRestBundle\Rest\Controller;
 
+use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\ChainConfigResolver;
 use Ez\ConferenceRestBundle\Rest\Values\Sponsors;
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -16,7 +17,7 @@ class SponsorsController extends BaseController
      */
     public function getList( )
     {
-        /** @var ConfigResolver $configResolver */
+        /** @var ChainConfigResolver $configResolver */
         $configResolver = $this->container->get('ezpublish.config.resolver.core');
         $languages = $configResolver->getParameter( 'languages' );
 

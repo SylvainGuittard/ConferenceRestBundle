@@ -19,7 +19,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 
 /**
- * Helper for menus
+ * Helper for talks 
  */
 class TalkService
 {

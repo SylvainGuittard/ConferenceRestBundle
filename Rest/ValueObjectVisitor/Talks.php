@@ -9,7 +9,7 @@ use eZ\Publish\Core\REST\Common\Output\Generator;
 use eZ\Publish\Core\REST\Common\Output\ValueObjectVisitor;
 use eZ\Publish\Core\REST\Common\Output\Visitor;
 
-class Talk extends ValueObjectVisitor
+class Talks extends ValueObjectVisitor
 {
     /**
      * @var \eZ\Publish\Core\REST\Common\Output\FieldTypeSerializer

@@ -11,14 +11,14 @@ parameters:
     ez.value.speaker.class: Ez\ConferenceRestBundle\Rest\Values\Speaker
 
     # Controller for Talks
-    ez.controller.talk.class: Ez\ConferenceRestBundle\Rest\Controller\TalkController
+    ez.controller.talks.class: Ez\ConferenceRestBundle\Rest\Controller\TalkController
 
     # Rest object for Talk
-    ez.value_object_visitor.talk.class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Talk
-    ez.value.talk.class: Ez\ConferenceRestBundle\Rest\Values\Talk
+    ez.value_object_visitor.talks.class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Talks
+    ez.value.talks.class: Ez\ConferenceRestBundle\Rest\Values\Talks
 
-    # Class for service talk
-    ez.conference.talk.class: Ez\ConferenceRestBundle\Services\TalkService
+    # Class for talk service
+    ez.conference.talkservice.class: Ez\ConferenceRestBundle\Services\TalkService
 
     # Controller for Sponsors
     ez.controller.sponsors.class: Ez\ConferenceRestBundle\Rest\Controller\SponsorsController
@@ -48,20 +48,20 @@ services:
             - { name: ezpublish_rest.output.value_object_visitor, type: %ez.value.speaker.class% }
 
     # Talk Rest conf
-    ez.controller.talk:
-        class: %ez.controller.talk.class%
+    ez.controller.talks:
+        class: %ez.controller.talks.class%
         parent: ezpublish_rest.controller.base
 
-    ez.value_object_visitor.talk:
+    ez.value_object_visitor.talks:
         parent: ezpublish_rest.output.value_object_visitor.base
-        class: %ez.value_object_visitor.talk.class%
+        class: %ez.value_object_visitor.talks.class%
         arguments: [ @ezpublish_rest.field_type_serializer ]
         tags:
-            - { name: ezpublish_rest.output.value_object_visitor, type: %ez.value.talk.class% }
+            - { name: ezpublish_rest.output.value_object_visitor, type: %ez.value.talks.class% }
 
     # Talk Service
     ez.conference.rest.talk:
-        class: %ez.conference.talk.class%
+        class: %ez.conference.talkservice.class%
         arguments:
             - @ezpublish.config.resolver.core
             - @ezpublish.api.service.location
