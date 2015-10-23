@@ -43,13 +43,13 @@ class SpeakersController extends BaseController
 
     /**
      * Function to get a speaker + his talks
-     * @param $speakerId
+     * @param $speakerId --> ContentId
      * @return Speaker
      */
     public function getSpeaker ( $speakerId ) {
         //get Speaker
-        $speakerLocation = $this->repository->getLocationService()->loadLocation( $speakerId );
-        $speakerContent = $this->repository->getContentService()->loadContentByContentInfo( $speakerLocation->getContentInfo() );
+        //$speakerLocation = $this->repository->getLocationService()->loadLocation( $speakerId );
+        $speakerContent = $this->repository->getContentService()->loadContent( $speakerId );
 
         $speakerContentType = $this->repository->getContentTypeService()->loadContentTypeByIdentifier( 'speaker' );
 
