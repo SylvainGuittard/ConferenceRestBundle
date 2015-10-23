@@ -13,13 +13,13 @@ ez_get_speaker:
 ez_get_talks:
     pattern: /talks/list
     defaults:
-        _controller: ez.controller.talk:getList
+        _controller: ez.controller.talks:getList
     methods: [GET]
 
 ez_get_talks_by_speaker:
     pattern: /talks/get/{speakerId}
     defaults:
-        _controller: ez.controller.talk:getListBySpeaker
+        _controller: ez.controller.talks:getListBySpeaker
     methods: [GET]
 
 ez_get_sponsors:
