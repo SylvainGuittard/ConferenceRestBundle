@@ -13,9 +13,15 @@ parameters:
     # Controller for Talks
     ez.controller.talks.class: Ez\ConferenceRestBundle\Rest\Controller\TalkController
 
-    # Rest object for Talk
+    # Rest object for Talks
     ez.value_object_visitor.talks.class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Talks
     ez.value.talks.class: Ez\ConferenceRestBundle\Rest\Values\Talks
+
+    # Rest object for Talk
+    ez.value_object_visitor.talk.class: Ez\ConferenceRestBundle\Rest\ValueObjectVisitor\Talk
+    ez.value.talk.class: Ez\ConferenceRestBundle\Rest\Values\Talk
+
+
 
     # Class for talk service
     ez.conference.talkservice.class: Ez\ConferenceRestBundle\Services\TalkService
@@ -58,6 +64,13 @@ services:
         arguments: [ @ezpublish_rest.field_type_serializer ]
         tags:
             - { name: ezpublish_rest.output.value_object_visitor, type: %ez.value.talks.class% }
+
+    ez.value_object_visitor.talk:
+        parent: ezpublish_rest.output.value_object_visitor.base
+        class: %ez.value_object_visitor.talk.class%
+        arguments: [ @ezpublish_rest.field_type_serializer ]
+        tags:
+            - { name: ezpublish_rest.output.value_object_visitor, type: %ez.value.talk.class% }
 
     # Talk Service
     ez.conference.rest.talk:
