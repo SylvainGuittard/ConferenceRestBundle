@@ -41,7 +41,7 @@ class Speaker extends ValueObjectVisitor
 
         $generator->startHashElement( 'Content');
 
-        $generator->startHashElement( 'speaker');
+        $generator->startHashElement( 'Speaker');
 
             // Display the content name
             $generator->startValueElement( 'name', $speaker->getVersionInfo()->getContentInfo()->name );
@@ -70,7 +70,7 @@ class Speaker extends ValueObjectVisitor
                 $generator->endHashElement( 'field' );
             }
             $generator->endList( 'field' );
-        $generator->endHashElement( 'speaker');
+        $generator->endHashElement( 'Speaker');
 
         $generator->startHashElement( 'Talks');
         $generator->startList( 'Talks');
@@ -79,7 +79,7 @@ class Speaker extends ValueObjectVisitor
         $talkList = $data->talkList;
         $contentTypeTalk = $talkList->contentType;
         $talkDate = false;
-        
+
         foreach( $data->talkList->talks as $talk )
         {
             /** @var Content $talkContent */
