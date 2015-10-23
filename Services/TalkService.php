@@ -19,7 +19,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 
 /**
- * Helper for talks 
+ * Helper for talks
  */
 class TalkService
 {
@@ -60,17 +60,16 @@ class TalkService
 
     /**
      * Function to get all talks for a specific contentId speaker
-     * @param $speakerLocationId
+     * @param $speakerContentId
      * @return array
      * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentValue
      */
-    public function getListBySpeaker( $speakerLocationId )
+    public function getListBySpeaker( $speakerContentId )
     {
         $configResolver = $this->configResolver;
         $languages = $configResolver->getParameter( 'languages' );
 
-        $speakerLocation = $this->locationService->loadLocation( $speakerLocationId );
-        $speakerContent = $this->contentService->loadContentByContentInfo( $speakerLocation->contentInfo );
+        $speakerContent = $this->contentService->loadContent( $speakerContentId );
         $rootLocation = $this->locationService->loadLocation( 2 );
         $query = new Query();
         $query->criterion = new Criterion\LogicalAnd(
